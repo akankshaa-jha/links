@@ -1,0 +1,101 @@
+import java.util.*; 
+
+import java.util.*;  
+class DLL{ // Doubly Linked List in Java
+    Node head, tail;
+    class Node{ 
+        int data; 
+        Node next, prev;
+        Node(int v) { this.data = v; }
+    } 
+    void push(int v){
+        Node n = new Node(v);
+        n.next = head;
+        if(head == null) tail = n;
+        if(head != null) head.prev = n;
+        head = n;
+    }
+    void append(int v){
+        if(head == null) push(v);
+        else{
+            Node n = new Node(v); 
+            tail.next = n; n.prev = tail;
+            tail = n;
+        }
+    }
+    void insertAfter(int a, int b){ // insert b after a
+        if(head == null) return;
+        Node tmp = head;
+        while(tmp != null){
+            if(tmp.data == a) break;
+            tmp = tmp.next;
+        } if(tmp == null) return;
+        if(tmp == tail) { append(b); return; }
+        Node n = new Node(b);
+        n.next = tmp.next; tmp.next.prev = n;
+        n.prev = tmp; tmp.next = n;
+    }  
+    void insertBefore(int a, int b){// insert b before a
+        if(head == null) return;
+        if(head.data == a) { push(b); return; }
+        Node tmp = head;
+        while(tmp != null){
+            if(tmp.data == a) break;
+            tmp = tmp.next;
+        } if(tmp == null) return;
+        Node n = new Node(b);
+        tmp.prev.next = n; n.prev = tmp.prev;
+        n.next = tmp; tmp.prev = n;
+    }  
+  	void delete(int a){
+      	// 1. If list is empty
+        if(head == null) return;
+        // 2. if a is both h,t, make h,t as null
+        else if(head.data == a && tail.data == a && head == tail)
+            head = tail = null;
+        // 3. if a is head
+        else if(head.data == a) 
+            { head = head.next; head.prev = null; }
+        else{
+            Node tmp = head;
+            while(tmp != null){
+                if(tmp.data == a) break;
+                tmp = tmp.next;
+            } if(tmp == null) return; // if a isnt found, exit
+            // 4. if a is tail, tail prev is tail, tail next is null
+            if(tmp == tail)
+            { tail = tail.prev; tail.next = null; return; }
+            // 5. if a is in the middle
+            tmp.prev.next = tmp.next;
+            tmp.next.prev = tmp.prev;
+        }
+    }
+    void printDLL(){
+        System.out.print("Head->Tail: ");
+        for(Node tmp=head; tmp != null; tmp = tmp.next) 
+            System.out.print(tmp.data + " ");
+        System.out.print("\nTail->Head: ");
+        for(Node tmp=tail; tmp != null; tmp = tmp.prev) 
+            System.out.print(tmp.data + " ");
+        System.out.println();
+    }
+} 
+
+public class Solution {
+    public static void main(String args[] ) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        DLL o = new DLL();
+        int n = sc.nextInt();
+        for(int i=0;i<n;i++){
+            int c = sc.nextInt();
+            switch(c){
+                case 1 : { o.push(sc.nextInt()); } break;
+                case 2 : { o.append(sc.nextInt()); } break; 
+                case 3 : { o.insertAfter(sc.nextInt(), sc.nextInt()); } break;
+                case 4 : { o.insertBefore(sc.nextInt(), sc.nextInt()); } break;
+              	case 5 : { o.delete(sc.nextInt()); }
+            }
+        } 
+        o.printDLL();
+    }
+}
