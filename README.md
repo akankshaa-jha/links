@@ -165,3 +165,5 @@ if list is empty: push
 3.
 4.
 5. . https://www.hackerrank.com/cmrit-october-2024
+
+https://cybersecurity.att.com/blogs/security-essentials/image-steganography-concealing-secrets-within-pixels
