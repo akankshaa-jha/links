@@ -167,3 +167,5 @@ if list is empty: push
 5. . https://www.hackerrank.com/cmrit-october-2024
 
 https://cybersecurity.att.com/blogs/security-essentials/image-steganography-concealing-secrets-within-pixels
+
+https://github.com/pravinknr/DataScience_R_Codes/blob/master/1.%20Practice(Basics)/Logistic%20Regression/Claimants/claimants.csv
